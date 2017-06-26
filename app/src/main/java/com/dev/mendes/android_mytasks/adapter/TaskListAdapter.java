@@ -2,6 +2,7 @@ package com.dev.mendes.android_mytasks.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.nameTask.setText(mCursor.getString(nameIndex));
         holder.checkBox.setChecked(mCursor.getInt(checkIndex) == 1);
 
+
         // Deleta tarefa ao clicar no delete para cada item da lista
         holder.icDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +75,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 mCursor.moveToPosition(holder.getAdapterPosition());
                 DataBaseControl db = new DataBaseControl(holder.itemView.getContext());
                 db.setChecked(mCursor.getString(idIndex), isChecked);
+                if(isChecked ){
+                    holder.nameTask.setPaintFlags(holder.nameTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    holder.nameTask.setPaintFlags(holder.nameTask.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+
 
             }
         });
