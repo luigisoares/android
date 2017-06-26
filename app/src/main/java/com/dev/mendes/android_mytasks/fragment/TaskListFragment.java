@@ -24,8 +24,6 @@ import java.util.ArrayList;
 
 public class TaskListFragment extends Fragment implements TaskListAdapter.OnTaskClickInterface {
 
-
-    private ArrayList<Task> tasks = new ArrayList<>();
     private TaskListAdapter adapter;
     private LinearLayout layoutEmpty;
 
