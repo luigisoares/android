@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,10 +15,8 @@ import android.widget.LinearLayout;
 import com.dev.mendes.android_mytasks.R;
 import com.dev.mendes.android_mytasks.activity.NewTaskActivity;
 import com.dev.mendes.android_mytasks.activity.TaskDetailActivity;
-import com.dev.mendes.android_mytasks.activity.TaskListActivity;
 import com.dev.mendes.android_mytasks.adapter.TaskListAdapter;
 import com.dev.mendes.android_mytasks.dataBase.DataBaseControl;
-import com.dev.mendes.android_mytasks.dataBase.DataBaseTask;
 import com.dev.mendes.android_mytasks.dataBase.Task;
 
 import java.util.ArrayList;

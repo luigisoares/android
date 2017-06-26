@@ -53,9 +53,9 @@ public class DataBaseControl {
     }
 
 
-    public boolean setChecked(String id, boolean isChecked){
+    public boolean setChecked(String id, boolean isChecked) {
         ContentValues cv = new ContentValues();
-        cv.put(DataBaseTask.CHECK, isChecked? 1 : 0);
+        cv.put(DataBaseTask.CHECK, isChecked ? 1 : 0);
 
         db = banco.getWritableDatabase();
         int rows = db.update(DataBaseTask.TABELA, cv, DataBaseTask.ID + " = " + id, null);
@@ -63,10 +63,10 @@ public class DataBaseControl {
         return rows > 0;
     }
 
-    public void deleteTask(int id){
+    public void deleteTask(int id) {
         String where = DataBaseTask.ID + " = " + id;
         db = banco.getReadableDatabase();
-        db.delete(DataBaseTask.TABELA,where,null);
+        db.delete(DataBaseTask.TABELA, where, null);
         db.close();
     }
 

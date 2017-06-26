@@ -1,10 +1,7 @@
 package com.dev.mendes.android_mytasks.activity;
 
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
 import com.dev.mendes.android_mytasks.R;
 import com.dev.mendes.android_mytasks.fragment.TaskListFragment;

@@ -9,11 +9,11 @@ import android.os.Parcelable;
 
 public class Task implements Parcelable {
 
-    private  String taskName;
-    private  String id;
-    private  String taskPlace;
-    private  String taskDate;
-    private  String taskNote;
+    private String taskName;
+    private String id;
+    private String taskPlace;
+    private String taskDate;
+    private String taskNote;
     private boolean isChecked;
 
     public Task(String id, String taskName, String taskPlace, String taskDate, String taskNote, boolean isChecked) {
@@ -25,7 +25,7 @@ public class Task implements Parcelable {
         this.isChecked = isChecked;
     }
 
-    public Task(){
+    public Task() {
 
     }
 

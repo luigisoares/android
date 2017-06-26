@@ -1,15 +1,9 @@
 package com.dev.mendes.android_mytasks.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import com.dev.mendes.android_mytasks.R;
-import com.dev.mendes.android_mytasks.dataBase.DataBaseControl;
 import com.dev.mendes.android_mytasks.fragment.NewTaskFragment;
 
 public class NewTaskActivity extends AppCompatActivity {

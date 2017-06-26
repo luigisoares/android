@@ -29,7 +29,7 @@ public class NewTaskFragment extends Fragment {
 
         // Encontra os elementos da tela
         etTaskName = (EditText) view.findViewById(R.id.et_name);
-        etTaskPlace = (EditText)view.findViewById(R.id.et_place);
+        etTaskPlace = (EditText) view.findViewById(R.id.et_place);
         etTaskDate = (EditText) view.findViewById(R.id.et_date);
         etTaskNote = (EditText) view.findViewById(R.id.et_note);
 
@@ -47,11 +47,11 @@ public class NewTaskFragment extends Fragment {
                 taskPlace = etTaskPlace.getText().toString();
                 taskNote = etTaskNote.getText().toString();
 
-                task = crud.addTask(taskName,taskDate,taskPlace,taskNote);
+                task = crud.addTask(taskName, taskDate, taskPlace, taskNote);
 
                 Toast.makeText(getContext(), task, Toast.LENGTH_SHORT).show();
 
-              getActivity().finish();
+                getActivity().finish();
 
             }
         });

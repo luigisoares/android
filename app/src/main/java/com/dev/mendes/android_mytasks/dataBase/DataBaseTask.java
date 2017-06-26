@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by tainaviriato on 21/06/17.
  */
 
-public class DataBaseTask extends SQLiteOpenHelper{
+public class DataBaseTask extends SQLiteOpenHelper {
 
     public static final String NOME_BANCO = "banco.db";
     public static final String TABELA = "task";
@@ -36,7 +36,7 @@ public class DataBaseTask extends SQLiteOpenHelper{
                 + PLACE + " text, "
                 + CHECK + " INTEGER DEFAULT 0, "
                 + NOTE + " text "
-                +")";
+                + ")";
         db.execSQL(sql);
     }
 

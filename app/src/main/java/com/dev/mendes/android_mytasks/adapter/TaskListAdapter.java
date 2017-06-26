@@ -1,10 +1,7 @@
 package com.dev.mendes.android_mytasks.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Paint;
-import android.support.v7.widget.ActivityChooserView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +9,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.mendes.android_mytasks.R;
-import com.dev.mendes.android_mytasks.activity.TaskDetailActivity;
 import com.dev.mendes.android_mytasks.dataBase.DataBaseControl;
 import com.dev.mendes.android_mytasks.dataBase.DataBaseTask;
 import com.dev.mendes.android_mytasks.dataBase.Task;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by tainaviriato on 21/06/17.
