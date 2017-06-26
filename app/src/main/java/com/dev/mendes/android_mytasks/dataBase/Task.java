@@ -1,10 +1,13 @@
 package com.dev.mendes.android_mytasks.dataBase;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by tainaviriato on 21/06/17.
  */
 
-public class Task {
+public class Task implements Parcelable {
 
     private  String taskName;
     private  String id;
@@ -20,6 +23,10 @@ public class Task {
         this.taskDate = taskDate;
         this.taskNote = taskNote;
         this.isChecked = isChecked;
+    }
+
+    public Task(){
+
     }
 
     public String getTaskName() {
@@ -70,4 +77,41 @@ public class Task {
         isChecked = checked;
     }
 
+
+    protected Task(Parcel in) {
+        taskName = in.readString();
+        id = in.readString();
+        taskPlace = in.readString();
+        taskDate = in.readString();
+        taskNote = in.readString();
+        isChecked = in.readByte() != 0x00;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(taskName);
+        dest.writeString(id);
+        dest.writeString(taskPlace);
+        dest.writeString(taskDate);
+        dest.writeString(taskNote);
+        dest.writeByte((byte) (isChecked ? 0x01 : 0x00));
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 }

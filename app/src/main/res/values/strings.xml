@@ -2,7 +2,7 @@
     <string name="app_name">android-mytasks</string>
     <string name="header_title">Minhas Tarefas</string>
     <string name="list_example">Enviar trabalho de Cálculo</string>
-    <string name="empty_list">Você ainda não possui tarefas. Clique no {+} para criar uma nova.</string>
+    <string name="empty_list">Você ainda não possui tarefas. \n Clique no {+} para criar uma nova.</string>
     <string name="new_task">Digite sua tarefa</string>
     <string name="task_place">Lugar</string>
     <string name="task_date">Data</string>

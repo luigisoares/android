@@ -4,12 +4,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.dev.mendes.android_mytasks.TaskListActivity">
+        tools:context="com.dev.mendes.android_mytasks.activity.TaskListActivity">
 
-        <fragment
-            android:id="@+id/fragment_forecast"
-            android:name="com.dev.mendes.android_mytasks.TaskListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_task_list"/>
+
     </FrameLayout>

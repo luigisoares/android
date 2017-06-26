@@ -18,7 +18,7 @@ public class DataBaseTask extends SQLiteOpenHelper{
     public static final String PLACE = "taskPlace";
     public static final String NOTE = "taskNote";
     public static final String CHECK = "chekBox";
-    public static final int VERSAO = 1;
+    public static final int VERSAO = 3;
 
 
     public DataBaseTask(Context context) {
@@ -34,6 +34,7 @@ public class DataBaseTask extends SQLiteOpenHelper{
                 + NOME + " text, "
                 + DATE + " text, "
                 + PLACE + " text, "
+                + CHECK + " INTEGER DEFAULT 0, "
                 + NOTE + " text "
                 +")";
         db.execSQL(sql);
@@ -41,7 +42,7 @@ public class DataBaseTask extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + TABELA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELA);
         onCreate(db);
     }
 }

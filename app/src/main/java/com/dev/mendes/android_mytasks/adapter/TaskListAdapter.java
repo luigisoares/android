@@ -1,15 +1,24 @@
 package com.dev.mendes.android_mytasks.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Paint;
+import android.support.v7.widget.ActivityChooserView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.mendes.android_mytasks.R;
+import com.dev.mendes.android_mytasks.activity.TaskDetailActivity;
+import com.dev.mendes.android_mytasks.dataBase.DataBaseControl;
+import com.dev.mendes.android_mytasks.dataBase.DataBaseTask;
 import com.dev.mendes.android_mytasks.dataBase.Task;
 
 import java.util.ArrayList;
@@ -21,19 +30,21 @@ import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
 
-    private ArrayList<Task> tasks;
-    public Context context;
+    private Cursor mCursor;
+    private OnTaskClickInterface clickInterface;
+    private Context context;
 
-    public TaskListAdapter(Context context, ArrayList<Task> tasks) {
-        this.tasks = tasks;
+    public TaskListAdapter(Context context, OnTaskClickInterface onTaskClickInterface) {
         this.context = context;
+        this.clickInterface = onTaskClickInterface;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Infla o layout correto
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list, parent, false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,50 +52,120 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // Recupera os valores da lista na posicao atual
-        String name = tasks.get(position).getTaskName();
-      //  boolean check = tasks.get(position).getIsChecked();
-       // String date = tasks.get(position).getTaskDate();
+        final int idIndex = mCursor.getColumnIndex(DataBaseTask.ID);
+        int nameIndex = mCursor.getColumnIndex(DataBaseTask.NOME);
+        int checkIndex = mCursor.getColumnIndex(DataBaseTask.CHECK);
 
-        //in some cases, it will prevent unwanted situations
-        holder.checkBox.setOnCheckedChangeListener(null);
+        // Move o cursor do bd para a posicaco
+        mCursor.moveToPosition(position);
 
-        //if true, your checkbox will be selected, else unselected
-        holder.checkBox.setChecked(tasks.get(position).getIsChecked());
+        // Mapeia os dados no item da lista
+        holder.nameTask.setText(mCursor.getString(nameIndex));
+        holder.checkBox.setChecked(mCursor.getInt(checkIndex) == 1);
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        // Deleta tarefa ao clicar no delete para cada item da lista
+        holder.icDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tasks.get(holder.getAdapterPosition()).setChecked(isChecked);
+            public void onClick(View v) {
+                DataBaseControl db = new DataBaseControl(holder.itemView.getContext());
+                db.deleteTask(mCursor.getInt(idIndex));
+                mCursor = db.loadTasks();
+                notifyDataSetChanged();
             }
         });
 
-        // Define os valores no item
-        holder.nameTask.setText(name);
-       // holder.checkBox.setChecked(check);
-       // holder.dateTask.setText(date);
+        // Click do check box para cada item da lista
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCursor.moveToPosition(holder.getAdapterPosition());
+                DataBaseControl db = new DataBaseControl(holder.itemView.getContext());
+                db.setChecked(mCursor.getString(idIndex), isChecked);
+
+            }
+        });
+
+        // Click para cada item da lista
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickInterface.onTaskClick(getTaskFromCursor(holder.getAdapterPosition()));
+            }
+        });
+
+
+    }
+
+    /*
+     * Converte o cursor em uma tarefa
+     */
+    private Task getTaskFromCursor(int position) {
+        mCursor.moveToPosition(position);
+
+        int idIndex = mCursor.getColumnIndex(DataBaseTask.ID);
+        int nameIndex = mCursor.getColumnIndex(DataBaseTask.NOME);
+        int placeIndex = mCursor.getColumnIndex(DataBaseTask.PLACE);
+        int dateIndex = mCursor.getColumnIndex(DataBaseTask.DATE);
+        int checkIndex = mCursor.getColumnIndex(DataBaseTask.CHECK);
+        int noteIndex = mCursor.getColumnIndex(DataBaseTask.NOTE);
+
+        Task task = new Task();
+        task.setId(mCursor.getString(idIndex));
+        task.setTaskName(mCursor.getString(nameIndex));
+        task.setTaskPlace(mCursor.getString(placeIndex));
+        task.setTaskDate(mCursor.getString(dateIndex));
+        task.setTaskNote(mCursor.getString(noteIndex));
+        task.setChecked(mCursor.getInt(checkIndex) == 1);
+
+        return task;
+
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        if (mCursor == null) {
+            return 0;
+        }
+        return mCursor.getCount();
     }
 
 
     /*
+     * Atualiza o cursos
+     */
+    public void swapCursor(Cursor c) {
+        // check if this cursor is the same as the previous cursor (mCursor)
+        if (mCursor == c) {
+            return; // bc nothing has changed
+        } else {
+            mCursor = c;
+            notifyDataSetChanged();
+        }
+
+    }
+
+    /*
      * Objeto necessario para mapear os componentes do layout do item da lista
-     * */
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private TextView nameTask, dateTask;
+        private TextView nameTask;
         private CheckBox checkBox;
+        private ImageView icDelete;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            this.nameTask = (TextView) view.findViewById(R.id.tv_task);
-            this.dateTask = (TextView) view.findViewById(R.id.tv_date);
+            this.nameTask = (TextView) view.findViewById(R.id.tv_itemList);
             this.checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+            this.icDelete = (ImageView) view.findViewById(R.id.imgDelete);
         }
     }
 
+    /*
+    * Interface para o click da tarefa
+     */
+    public interface OnTaskClickInterface {
+        void onTaskClick(Task item);
+    }
 }
