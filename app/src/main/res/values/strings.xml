@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-mytasks</string>
+    <string name="app_name">Minhas Tarefas</string>
     <string name="header_title">Minhas Tarefas</string>
     <string name="list_example">Enviar trabalho de Cálculo</string>
     <string name="empty_list">Você ainda não possui tarefas. \n Clique no {+} para criar uma nova.</string>
