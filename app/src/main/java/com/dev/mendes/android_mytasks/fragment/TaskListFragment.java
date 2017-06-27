@@ -19,8 +19,6 @@ import com.dev.mendes.android_mytasks.adapter.TaskListAdapter;
 import com.dev.mendes.android_mytasks.dataBase.DataBaseControl;
 import com.dev.mendes.android_mytasks.dataBase.Task;
 
-import java.util.ArrayList;
-
 
 public class TaskListFragment extends Fragment implements TaskListAdapter.OnTaskClickInterface {
 

@@ -45,6 +45,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // Recupera os valores da lista na posicao atual
+        // Mapeia o index do banco de dados
         final int idIndex = mCursor.getColumnIndex(DataBaseTask.ID);
         int nameIndex = mCursor.getColumnIndex(DataBaseTask.NOME);
         int checkIndex = mCursor.getColumnIndex(DataBaseTask.CHECK);
@@ -61,8 +62,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.icDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Busca o banco de dados
                 DataBaseControl db = new DataBaseControl(holder.itemView.getContext());
                 db.deleteTask(mCursor.getInt(idIndex));
+                // Atualiza a lista
                 mCursor = db.loadTasks();
                 notifyDataSetChanged();
             }
@@ -72,9 +75,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Move o cursor para posicao recebida
                 mCursor.moveToPosition(holder.getAdapterPosition());
+                // Busca o banco de dados
                 DataBaseControl db = new DataBaseControl(holder.itemView.getContext());
                 db.setChecked(mCursor.getString(idIndex), isChecked);
+                // Risca o texto se checkbox for selecionado
                 if(isChecked ){
                     holder.nameTask.setPaintFlags(holder.nameTask.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
@@ -100,8 +106,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
      * Converte o cursor em uma tarefa
      */
     private Task getTaskFromCursor(int position) {
+        // Move cursor para posicao recebida
         mCursor.moveToPosition(position);
 
+        // Mapeia o index do banco de dados
         int idIndex = mCursor.getColumnIndex(DataBaseTask.ID);
         int nameIndex = mCursor.getColumnIndex(DataBaseTask.NOME);
         int placeIndex = mCursor.getColumnIndex(DataBaseTask.PLACE);
@@ -109,6 +117,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         int checkIndex = mCursor.getColumnIndex(DataBaseTask.CHECK);
         int noteIndex = mCursor.getColumnIndex(DataBaseTask.NOTE);
 
+        // Adiciona na tarefa as informacoes recuperadas
         Task task = new Task();
         task.setId(mCursor.getString(idIndex));
         task.setTaskName(mCursor.getString(nameIndex));
@@ -131,7 +140,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
 
     /*
-     * Atualiza o cursos
+     * Atualiza o cursor
      */
     public void swapCursor(Cursor c) {
         // check if this cursor is the same as the previous cursor (mCursor)

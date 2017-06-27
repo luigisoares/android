@@ -37,7 +37,6 @@ public class TaskDetailFragment extends Fragment {
             mTask = getArguments().getParcelable(ARG_TASK);
         }
 
-
     }
 
     @Override

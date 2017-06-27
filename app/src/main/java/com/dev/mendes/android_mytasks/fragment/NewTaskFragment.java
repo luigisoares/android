@@ -51,7 +51,8 @@ public class NewTaskFragment extends Fragment {
 
                 Toast.makeText(getContext(), task, Toast.LENGTH_SHORT).show();
 
-                getActivity().finish();
+                getActivity()
+                        .finish();
 
             }
         });
